@@ -93,7 +93,7 @@ petro_p2 = grdecl.PORO(G.cells.indexMap);
 
 
 %% Save .mat
-save('.\Data\petrophysics.mat');
+%save('.\Data\petrophysics.mat');
 
 
 
