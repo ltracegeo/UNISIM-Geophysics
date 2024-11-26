@@ -1,5 +1,30 @@
 
 addpath(genpath('.\SeReM'))
+%addpath(genpath('.\SeisLab_10.0301'))
+
+%% Load well data
+% 
+% load('.\Data\WellNames.mat')
+% 
+% well_logs_table = [];
+% for w = 1:size(WellNames,1)
+%     file_name = WellNames.Well(w) + '.las';
+%     file_path = char('.\Data\well_las\' + file_name);
+%     
+%     wells{w} = read_las_file(file_path);    
+%     wells{w}.curve_info{end+1,1} = 'Vp2013'; wells{w}.curve_info{end,2} = 'm/s'; wells{w}.curve_info{end,3} = 'Vp2013';
+%     wells{w}.curve_info{end+1,1} = 'Vs2013'; wells{w}.curve_info{end,2} = 'm/s'; wells{w}.curve_info{end,3} = 'Vs2013';
+%     wells{w}.curve_info{end+1,1} = 'Rho2013'; wells{w}.curve_info{end,2} = 'g/cm3'; wells{w}.curve_info{end,3} = 'Rho2013';
+%     wells{w}.curve_info{end+1,1} = 'Ip2013'; wells{w}.curve_info{end,2} = 'm/s g/cm3'; wells{w}.curve_info{end,3} = 'Ip2013';
+%     wells{w}.curve_info{end+1,1} = 'VpVs2013'; wells{w}.curve_info{end,2} = '_'; wells{w}.curve_info{end,3} = 'VpVs2013';
+%     
+%     wells{w}.curve_info{end+1,1} = 'Vp2024'; wells{w}.curve_info{end,2} = 'm/s'; wells{w}.curve_info{end,3} = 'Vp2024';
+%     wells{w}.curve_info{end+1,1} = 'Vs2024'; wells{w}.curve_info{end,2} = 'm/s'; wells{w}.curve_info{end,3} = 'Vs2024';
+%     wells{w}.curve_info{end+1,1} = 'Rho2024'; wells{w}.curve_info{end,2} = 'g/cm3'; wells{w}.curve_info{end,3} = 'Rho2024';
+%     wells{w}.curve_info{end+1,1} = 'Ip2024'; wells{w}.curve_info{end,2} = 'm/s g/cm3'; wells{w}.curve_info{end,3} = 'Ip2024';
+%     wells{w}.curve_info{end+1,1} = 'VpVs2024'; wells{w}.curve_info{end,2} = '_'; wells{w}.curve_info{end,3} = 'VpVs2024';
+% end
+
 
 %%   COMPUTE TIME-LAPSE 2013 USING SOFT SAND MODEL
 
