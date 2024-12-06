@@ -116,7 +116,7 @@ Vs2024_seismic_time(isnan(Vs2024_seismic_time)) = vs_outer;
 Rho2024_seismic_time(isnan(Rho2024_seismic_time)) = rho_outer;
 
 %% Compute seismic in time using VP MONITOR
-load('C:\Users\leandro\Documents\GIT\Grids - Felipe\Data\wavelet.mat')
+load('.\Data\wavelet.mat')
 
 Seismic2013 = compute_seismic(4, Rho2013_seismic_time,Vp2013_seismic_time, Vs2013_seismic_time, [10, 20, 30, 40], wavelet);
 Seismic2024_Tmonitor = compute_seismic(4, Rho2024_seismic_time,Vp2024_seismic_time, Vs2024_seismic_time, [10, 20, 30, 40], wavelet);
