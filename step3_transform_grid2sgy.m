@@ -116,10 +116,11 @@ Vs2024_seismic_time(isnan(Vs2024_seismic_time)) = vs_outer;
 Rho2024_seismic_time(isnan(Rho2024_seismic_time)) = rho_outer;
 
 %% Compute seismic in time using VP MONITOR
+thetas = [10,20,30,40];
 load('.\Data\wavelet.mat')
 
-Seismic2013 = compute_seismic(4, Rho2013_seismic_time,Vp2013_seismic_time, Vs2013_seismic_time, [10, 20, 30, 40], wavelet);
-Seismic2024_Tmonitor = compute_seismic(4, Rho2024_seismic_time,Vp2024_seismic_time, Vs2024_seismic_time, [10, 20, 30, 40], wavelet);
+Seismic2013 = compute_seismic(4, Rho2013_seismic_time,Vp2013_seismic_time, Vs2013_seismic_time, thetas, wavelet);
+Seismic2024_Tmonitor = compute_seismic(4, Rho2024_seismic_time,Vp2024_seismic_time, Vs2024_seismic_time, thetas, wavelet);
 
 
 % PLOTS
@@ -149,41 +150,41 @@ colormap(seismic_simple)
 
 
 %% Convert 2024 in its own time
-% t0 = 2000;
-% dt_fine = 0.5;
-% dt_seis = 2;
-% [Vp2024_seismic_time, time2024]= convert2time(Vp2024_seismic,dz,Vp2024_seismic,t0,dt_fine,dt_seis);
-% Vs2024_seismic_time = convert2time(Vs2024_seismic,dz,Vp2024_seismic,t0,dt_fine,dt_seis);
-% Rho2024_seismic_time = convert2time(Rho2024_seismic,dz,Vp2024_seismic,t0,dt_fine,dt_seis);
-% 
-% 
-% Seismic2024 = compute_seismic(4, Rho2024_seismic_time,Vp2024_seismic_time, Vs2024_seismic_time, [10, 20, 30, 40],wavelet);
-% 
-% figure
-% subplot(211)
-% imagesc(squeeze(Vp2024_seismic(:,150,:)))
-% subplot(212)
-% imagesc(squeeze(Vp2024_seismic_time(:,150,:)))
+t0 = 2000;
+dt_fine = 0.5;
+dt_seis = 2;
+[Vp2024_seismic_time, time2024]= convert2time(Vp2024_seismic,dz,Vp2024_seismic,t0,dt_fine,dt_seis);
+Vs2024_seismic_time = convert2time(Vs2024_seismic,dz,Vp2024_seismic,t0,dt_fine,dt_seis);
+Rho2024_seismic_time = convert2time(Rho2024_seismic,dz,Vp2024_seismic,t0,dt_fine,dt_seis);
+
+
+Seismic2024 = compute_seismic(4, Rho2024_seismic_time,Vp2024_seismic_time, Vs2024_seismic_time, thetas,wavelet);
+
+figure
+subplot(211)
+imagesc(squeeze(Vp2024_seismic(:,150,:)))
+subplot(212)
+imagesc(squeeze(Vp2024_seismic_time(:,150,:)))
 
 %% Make SGY files
 
-write_segy(dt_seis, Vp2013_seismic_time, X, Y, t0, '.\SGY\2013\Pvelocity2013_NoiseFree.sgy')
-write_segy(dt_seis, Vs2013_seismic_time, X, Y, t0, '.\SGY\2013\Svelocity2013_NoiseFree.sgy')
-write_segy(dt_seis, Rho2013_seismic_time, X, Y, t0, '.\SGY\2013\Density2013_NoiseFree.sgy')
-write_segy(dt_seis, Vp2024_seismic_time, X, Y, t0, '.\SGY\2024\Pvelocity2024_TMonitor_NoiseFree.sgy')
-write_segy(dt_seis, Vs2024_seismic_time, X, Y, t0, '.\SGY\2024\Svelocity2024_TMonitor_NoiseFree.sgy')
-write_segy(dt_seis, Rho2024_seismic_time, X, Y, t0, '.\SGY\2024\Density2024_TMonitor_NoiseFree.sgy')
-write_segy(dt_seis, phi_seismic_time, X, Y, t0, '.\SGY\Porosity.sgy')
-write_segy(dt_seis, vsh_seismic_time, X, Y, t0, '.\SGY\Vshale.sgy')
-write_segy(dt_seis, sw2013_seismic_time, X, Y, t0, '.\SGY\2013\sw2013.sgy')
-write_segy(dt_seis, sw2024_seismic_time, X, Y, t0, '.\SGY\2024\sw2024_TMonitor.sgy')
-write_segy(dt_seis, Seismic2013(:,:,:,1), X, Y, t0, '.\SGY\2013\seismic2013_10deg_NoiseFree.sgy')
-write_segy(dt_seis, Seismic2013(:,:,:,2), X, Y, t0, '.\SGY\2013\seismic2013_20deg_NoiseFree.sgy')
-write_segy(dt_seis, Seismic2013(:,:,:,3), X, Y, t0, '.\SGY\2013\seismic2013_30deg_NoiseFree.sgy')
-write_segy(dt_seis, Seismic2013(:,:,:,4), X, Y, t0, '.\SGY\2013\seismic2013_40deg_NoiseFree.sgy')
-write_segy(dt_seis, Seismic2024_Tmonitor(:,:,:,1), X, Y, t0, '.\SGY\2024\seismic2024_10deg_TMonitor_NoiseFree.sgy')
-write_segy(dt_seis, Seismic2024_Tmonitor(:,:,:,2), X, Y, t0, '.\SGY\2024\seismic2024_20deg_TMonitor_NoiseFree.sgy')
-write_segy(dt_seis, Seismic2024_Tmonitor(:,:,:,3), X, Y, t0, '.\SGY\2024\seismic2024_30deg_TMonitor_NoiseFree.sgy')
-write_segy(dt_seis, Seismic2024_Tmonitor(:,:,:,4), X, Y, t0, '.\SGY\2024\seismic2024_40deg_TMonitor_NoiseFree.sgy')
+write_segy(dt_seis, Vp2013_seismic_time, X, Y, t0, '.\Export\2013\Pvelocity2013_NoiseFree.sgy')
+write_segy(dt_seis, Vs2013_seismic_time, X, Y, t0, '.\Export\2013\Svelocity2013_NoiseFree.sgy')
+write_segy(dt_seis, Rho2013_seismic_time, X, Y, t0, '.\Export\2013\Density2013_NoiseFree.sgy')
+write_segy(dt_seis, Vp2024_seismic_time, X, Y, t0, '.\Export\2024\Pvelocity2024_TMonitor_NoiseFree.sgy')
+write_segy(dt_seis, Vs2024_seismic_time, X, Y, t0, '.\Export\2024\Svelocity2024_TMonitor_NoiseFree.sgy')
+write_segy(dt_seis, Rho2024_seismic_time, X, Y, t0, '.\Export\2024\Density2024_TMonitor_NoiseFree.sgy')
+write_segy(dt_seis, phi_seismic_time, X, Y, t0, '.\Export\Porosity.sgy')
+write_segy(dt_seis, vsh_seismic_time, X, Y, t0, '.\Export\Vshale.sgy')
+write_segy(dt_seis, sw2013_seismic_time, X, Y, t0, '.\Export\2013\sw2013.sgy')
+write_segy(dt_seis, sw2024_seismic_time, X, Y, t0, '.\Export\2024\sw2024_TMonitor.sgy')
+write_segy(dt_seis, Seismic2013(:,:,:,1), X, Y, t0, '.\Export\2013\seismic2013_10deg_NoiseFree.sgy')
+write_segy(dt_seis, Seismic2013(:,:,:,2), X, Y, t0, '.\Export\2013\seismic2013_20deg_NoiseFree.sgy')
+write_segy(dt_seis, Seismic2013(:,:,:,3), X, Y, t0, '.\Export\2013\seismic2013_30deg_NoiseFree.sgy')
+write_segy(dt_seis, Seismic2013(:,:,:,4), X, Y, t0, '.\Export\2013\seismic2013_40deg_NoiseFree.sgy')
+write_segy(dt_seis, Seismic2024_Tmonitor(:,:,:,1), X, Y, t0, '.\Export\2024\seismic2024_10deg_TMonitor_NoiseFree.sgy')
+write_segy(dt_seis, Seismic2024_Tmonitor(:,:,:,2), X, Y, t0, '.\Export\2024\seismic2024_20deg_TMonitor_NoiseFree.sgy')
+write_segy(dt_seis, Seismic2024_Tmonitor(:,:,:,3), X, Y, t0, '.\Export\2024\seismic2024_30deg_TMonitor_NoiseFree.sgy')
+write_segy(dt_seis, Seismic2024_Tmonitor(:,:,:,4), X, Y, t0, '.\Export\2024\seismic2024_40deg_TMonitor_NoiseFree.sgy')
 
-write_segy(dt_seis, sw2024_seismic_time, X, Y, t0, '.\SGY\sw2024.sgy')
+write_segy(dt_seis, sw2024_seismic_time, X, Y, t0, '.\Export\sw2024.sgy')
