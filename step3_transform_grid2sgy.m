@@ -115,6 +115,16 @@ Vp2024_seismic_time(isnan(Vp2024_seismic_time)) = vp_outer;
 Vs2024_seismic_time(isnan(Vs2024_seismic_time)) = vs_outer;
 Rho2024_seismic_time(isnan(Rho2024_seismic_time)) = rho_outer;
 
+%% Compute time-shift
+time2013 = t0 + 2*1000*cumsum(dz./Vp2013_seismic,1);
+time2024 = t0 + 2*1000*cumsum(dz./Vp2024_seismic,1);
+
+time2013_time = convert2time(time2013,dz,Vp2013_seismic,t0,dt_fine,dt_seis);
+time2024_time = convert2time(time2024,dz,Vp2013_seismic,t0,dt_fine,dt_seis);
+
+time_shift = time2024_time - time2013_time ;
+diff_time_shift = diff(time_shift,1);
+
 %% Compute seismic in time using VP MONITOR
 thetas = [10,20,30,40];
 load('.\Data\wavelet.mat')
@@ -188,3 +198,4 @@ write_segy(dt_seis, Seismic2024_Tmonitor(:,:,:,3), X, Y, t0, '.\Export\2024\seis
 write_segy(dt_seis, Seismic2024_Tmonitor(:,:,:,4), X, Y, t0, '.\Export\2024\seismic2024_40deg_TMonitor_NoiseFree.sgy')
 
 write_segy(dt_seis, sw2024_seismic_time, X, Y, t0, '.\Export\sw2024.sgy')
+write_segy(dt_seis, time_shift, X, Y, t0, '.\Export\time_shift.sgy')
