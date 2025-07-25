@@ -90,7 +90,7 @@ dt_fine = 0.5;
 dt_seis = 2; % in meters, it is approximatly mean(Vp1(:))*(dt_seis/1000)/2 = 3.66 for dt = 2
 
 % Elastic properties:
-[Vp2013_seismic_time, time2013] = convert2time(Vp2013_seismic,dz,Vp2013_seismic,t0,dt_fine,dt_seis);
+[Vp2013_seismic_time, time2013_axis] = convert2time(Vp2013_seismic,dz,Vp2013_seismic,t0,dt_fine,dt_seis);
 Vs2013_seismic_time = convert2time(Vs2013_seismic,dz,Vp2013_seismic,t0,dt_fine,dt_seis);
 Rho2013_seismic_time = convert2time(Rho2013_seismic,dz,Vp2013_seismic,t0,dt_fine,dt_seis);
 Vp2024_seismic_time = convert2time(Vp2024_seismic,dz,Vp2013_seismic,t0,dt_fine,dt_seis);
@@ -136,12 +136,12 @@ Seismic2024_Tmonitor = compute_seismic(4, Rho2024_seismic_time,Vp2024_seismic_ti
 % PLOTS
 figure
 subplot(211)
-h1 = pcolor([1:size(Seismic2013,3)],time2013,squeeze(Seismic2013(:,150,:,end)));
+h1 = pcolor([1:size(Seismic2013,3)],time2013_axis,squeeze(Seismic2013(:,150,:,end)));
 caxis([-3 3])
 shading interp
 set(gca,'Ydir','reverse')
 subplot(212)
-h2 = pcolor([1:size(Seismic2024_Tmonitor,3)],time2013,squeeze(Seismic2024_Tmonitor(:,150,:,end)));
+h2 = pcolor([1:size(Seismic2024_Tmonitor,3)],time2013_axis,squeeze(Seismic2024_Tmonitor(:,150,:,end)));
 colormap(seismic_simple)
 caxis([-3 3])
 shading interp
@@ -152,7 +152,7 @@ ax2 = subplot(211);
 linkaxes([ax1, ax2], 'xy'); % Link x and y axes
 
 figure
-h1 = pcolor([1:size(Seismic2013,3)],time2013,squeeze(Seismic2013(:,150,:,end)) - squeeze(Seismic2024_Tmonitor(:,150,:,end)));
+h1 = pcolor([1:size(Seismic2013,3)],time2013_axis,squeeze(Seismic2013(:,150,:,end)) - squeeze(Seismic2024_Tmonitor(:,150,:,end)));
 caxis([-3 3])
 shading interp
 set(gca,'Ydir','reverse')
@@ -163,18 +163,18 @@ colormap(seismic_simple)
 t0 = 2000;
 dt_fine = 0.5;
 dt_seis = 2;
-[Vp2024_seismic_time, time2024]= convert2time(Vp2024_seismic,dz,Vp2024_seismic,t0,dt_fine,dt_seis);
-Vs2024_seismic_time = convert2time(Vs2024_seismic,dz,Vp2024_seismic,t0,dt_fine,dt_seis);
-Rho2024_seismic_time = convert2time(Rho2024_seismic,dz,Vp2024_seismic,t0,dt_fine,dt_seis);
+[Vp2024_seismic_time2024, time2024_axis]= convert2time(Vp2024_seismic,dz,Vp2024_seismic,t0,dt_fine,dt_seis);
+Vs2024_seismic_time2024 = convert2time(Vs2024_seismic,dz,Vp2024_seismic,t0,dt_fine,dt_seis);
+Rho2024_seismic_time2024 = convert2time(Rho2024_seismic,dz,Vp2024_seismic,t0,dt_fine,dt_seis);
 
 
-Seismic2024 = compute_seismic(4, Rho2024_seismic_time,Vp2024_seismic_time, Vs2024_seismic_time, thetas,wavelet);
+Seismic2024 = compute_seismic(4, Rho2024_seismic_time2024,Vp2024_seismic_time2024, Vs2024_seismic_time2024, thetas,wavelet);
 
 figure
 subplot(211)
 imagesc(squeeze(Vp2024_seismic(:,150,:)))
 subplot(212)
-imagesc(squeeze(Vp2024_seismic_time(:,150,:)))
+imagesc(squeeze(Vp2024_seismic_time2024(:,150,:)))
 
 %% Make SGY files
 
